@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CarDealer</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function find(event) {
+		if (event.keyCode == 13) {
+			$("#findForm").submit();
+		}
+	}
+	function deleteOffer(id) {
+		document.location.href = '/offer/delete?id=' + id;
+	}
+</script>
+</head>
+
+<nav
+	class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+	<form class="form-inline" action="/offer/">
+		<input class="form-control" type="text" placeholder="Search"
+			name="query">
+		<button class="btn btn-success" type="submit">Search</button>
+		<div class="justify-content-end">
+			<input class="btn btn-success " data-target="#myModalLogIn"
+				data-toggle="modal" type="button" value="LogIn" /> <input
+				class="btn btn-success " data-target="#myModalRegistration"
+				data-toggle="modal" type="button" value="Registration" />
+		</div>
+	</form>
+</nav>
+<div class="media" th:each="o : ${offers}">
+
+	<img th:src="${'data:image/png;base64,'+ o.mainPhoto}"
+		class="align-self-start mr-3" style="width: 435px" />
+
+	<div class="media-body bg-light">
+		<ul class="nav">
+			<li class="nav-item"><a class="nav-link"
+				th:href="'/offer/details/'+${o.id}"
+				th:text="${o.mark}+ ' '+${o.model}+' | Price: '+${o.price}+' PLN'">&nbsp;></a>
+			</li>
+		</ul>
+		<p th:text="'Production Date: '+${o.productionDate}">&nbsp;></p>
+		<p th:text="'Mileage: '+${o.mileage}+' KM'">&nbsp;></p>
+		<p th:text="'invoice: '+${o.invoice}+' | Accident: '+${o.accident}">&nbsp;></p>
+		<p
+			th:text="'HorsePower: '+${o.hp}+' Km '+' | Fuel type:  '+${o.fuelType}">&nbsp;></p>
+		<p th:text="'dyscryption : '+${o.discryption}">&nbsp;></p>
+
+	</div>
+	<input type="button" class="btn btn-danger" value="delete"
+		th:onclick="'deleteOffer(\'' + ${o.id} + '\');'" />
+</div>
+
+<div>
+	<input class="btn btn-success btn-block " data-target="#myModal"
+		data-toggle="modal" type="button" value="New offer" />
+</div>
+<form action="/offer/" class="form-horizontal" method="post"
+	enctype="multipart/form-data">
+	<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button">&times;</button>
+
+					<h4 class="modal-title">offerForm</h4>
+				</div>
+
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="mark+">mark:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="mark" name="mark"
+								placeholder="enter mark" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="model">model:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="model" name="model"
+								placeholder="Enter model" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="productionDate">productionDate:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="productionDate"
+								name="productionDate" placeholder="Enter production Date"
+								type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="registrationDate">registrationDate:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="registrationDate"
+								name="registrationDate" placeholder="Enter registration Date"
+								type="date" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="registrationCountry">registrationCountry:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="registrationCountry"
+								name="registrationCountry"
+								placeholder="Enter country of registration" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="mileage">mileage:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="mileage" name="mileage"
+								placeholder="Enter mileage" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="hp">hp:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="hp" name="hp"
+								placeholder="Enter horse power" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="weight">weight:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="weight" name="weight"
+								placeholder="Enter weight" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="acceleration0100">acceleration0100:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="acceleration0100"
+								name="acceleration0100" placeholder="Enter acceleration 0-100"
+								type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="acceleration100200">acceleration100200:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="acceleration100200"
+								name="acceleration100200"
+								placeholder="Enter acceleration 100-200" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="fuelType">fuelType:</label>
+
+						<div class="col-sm-8">
+							<select id="fuelType" name="fuelType">
+								<option value="petrol">Petrol</option>
+								<option value="diesel">Diesel</option>
+								<option value="Lpg">LPG</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="price">price:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="price" name="price"
+								placeholder="Enter price" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="offerTime">offerTime:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="offerTime" name="offerTime"
+								placeholder="Enter offerTime " type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for=discryption>discryption:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="discryption" name="discryption"
+								placeholder="Enter discryption" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for=accident>accident:</label>
+
+						<div class="col-sm-8">
+							<select id="accident" name="accident">
+								<option value="true">without accident</option>
+								<option value="false">with accident</option>
+							</select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for=invoice>invoice:</label>
+
+						<div class="col-sm-8">
+							<select id="invoice" name="invoice">
+								<option value="true">yes</option>
+								<option value="false">no</option>
+							</select>
+						</div>
+					</div>
+					<div class="file-upload-wrapper">
+						<label class="control-label col-sm-2" for=photos>Photos:</label> <input
+							type="file" id="photos" name="photos" class="file-upload" />
+					</div>
+
+					<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+					<button class="btn btn-default" type="submit">confirm</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+<form action="/offer/" class="form-horizontal" method="post">
+	<div class="modal fade" id="myModalLogIn" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button">&times;</button>
+
+					<h4 class="modal-title">LogIn Form</h4>
+				</div>
+
+
+
+				<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+				<button class="btn btn-default" type="submit">confirm</button>
+			</div>
+		</div>
+	</div>
+</form>
+<form action="/registration/" class="form-horizontal" method="post">
+	<div class="modal fade" id="myModalRegistration" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" data-dismiss="modal" type="button">&times;</button>
+
+					<h4 class="modal-title">Registration Form</h4>
+				</div>
+				<div class="modal-body">
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="login">login:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="login" name="login"
+								placeholder="enter login" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="name">name:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="name" name="name"
+								placeholder="enter name" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="surrName">surrName:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="surrName" name="surrName"
+								placeholder="Enter surrname" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="email">email:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="email" name="email"
+								placeholder="Enter email" type="text" />
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password">password:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="password" name="password"
+								placeholder="Enter password" type="text" />
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="control-label col-sm-2" for="password2">password2:</label>
+
+						<div class="col-sm-8">
+							<input class="form-control" id="password2" name="password2"
+								placeholder="Enter password again" type="text" />
+						</div>
+					</div>
+
+
+
+					<button class="btn btn-default" data-dismiss="modal" type="button">Close</button>
+					<button class="btn btn-default" type="submit">confirm</button>
+				</div>
+			</div>
+		</div>
+</form>
+<body>
+
+</body>
+</html>

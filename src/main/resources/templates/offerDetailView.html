@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>CarDealer</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</head>
+
+<style>
+	.uploadForm {
+	position: relative;
+	width: 100%;
+	height: 300px;
+	border: 4px dashed #000;
+	margin-top: 20px;
+}
+
+.uploadFormStatus {
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	line-height: 250px;
+	color: #000000;
+	font-family: Arial;
+}
+
+.uploadFormInputFile {
+	position: absolute;
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	outline: none;
+	opacity: 0;
+}
+
+</style>
+<script type="text/javascript">
+function changeFileStatus() {
+	var fileNames = "";
+	var allFiles = $("#inputFiles")[0].files;
+	for ( var i in allFiles) {
+		fileNames += allFiles[i].name + "<br/>";
+	}
+	$("#inputFilesStatus").text("Wybrano: " + allFiles.length + " pliki.");
+	if ($("#inputFiles")[0].files.length > 0 && $("#uploadFilesDirectoryLocation").val().length > 0) {
+		$("#submitUploadButton").prop('disabled', false);
+	}
+}
+
+</script>
+<nav
+	class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
+	<form class="form-inline" action="/offer/">
+		<input class="form-control" type="text" placeholder="Search"
+			name="query">
+		<button class="btn btn-success" type="submit">Search</button>
+		<div class="justify-content-end">
+			<input class="btn btn-success " data-target="#myModalLogIn"
+				data-toggle="modal" type="button" value="LogIn" /> <input
+				class="btn btn-success " data-target="#myModalRegistration"
+				data-toggle="modal" type="button" value="Registration" />
+		</div>
+	</form>
+</nav> 
+	<img th:src="${'data:image/png;base64,'+ offer.mainPhoto}"
+		class="align-self-start mr-3" style="width: 435px" />
+
+	<div class="media-body bg-light">
+    <h4 th:href="'/offer/details/'+${offer.id}" th:text="${offer.mark}+ ' '+${offer.model}+' | Price: '+${offer.price}+' PLN'">&nbsp;></h4>
+		<p th:text="'Production Date: '+${offer.productionDate}">&nbsp;></p>
+		<p th:text="'Mileage: '+${offer.mileage}+' KM'">&nbsp;></p>
+		<p th:text="'invoice: '+${offer.invoice}+' | Accident: '+${offer.accident}">&nbsp;></p>
+		<p th:text="'HorsePower: '+${offer.hp}+' Km '+' | Fuel type:  '+${offer.fuelType}">&nbsp;></p>
+		<p th:text="'registration Date: '+${offer.registrationDate}+' | registration Country:  '+${offer.registrationCountry}">&nbsp;></p>
+		<p th:text="'acceleration 0-100 km/h  : '+${offer.acceleration0100}+' | acceleration 100-200 km/h :  '+${offer.acceleration100200}">&nbsp;></p>
+		<p th:text="'weight : '+${offer.weight}">&nbsp;></p>
+		<p th:text="'dyscryption : '+${offer.discryption}">&nbsp;></p>
+		<div th:each="p : ${offer.photos}">
+		<img th:src="${'data:image/png;base64,'+ p}"
+		class="align-self-start mr-3" style="width: 435px" />
+		</div>
+		
+	</div>
+	<form method="POST" action="/offer/add" enctype="multipart/form-data" id="fileUploadForm" class="uploadForm">
+		
+		<input type="hidden" name="id" th:value="${offer.id}"/>
+					<input id="inputFiles" class="uploadFormInputFile" type="file" name="files" onchange="changeFileStatus();" multiple>
+					<input id="uploadFilesDirectoryLocation" type="hidden" />
+					<p id="inputFilesStatus" class="uploadFormStatus">Przeciągnij pliki tutaj</p>
+					<button id="submitUploadButton" type="submit" class="btn btn-success"
+						>Załaduj</button>
+				</form>
+<body>
+<!-- 
+
+<form method="POST" action="/offer/add" enctype="multipart/form-data" id="fileUploadForm" class="uploadForm">
+					<input id="inputFiles" class="uploadFormInputFile" type="file" name="files" onchange="changeFileStatus();" multiple>
+					<input id="uploadFilesDirectoryLocation" type="hidden" />
+					<p id="inputFilesStatus" class="uploadFormStatus">Przeciągnij pliki tutaj</p>
+					<button id="submitUploadButton" type="submit" class="btn btn-success"
+						>Załaduj</button>
+				</form>
+				
+			
+
+public ResponseEntity<?> uploadFiles(@RequestParam("files") MultipartFile[] uploadfiles,//
+			@RequestParam("directoryId") Long directoryId) throws IOException {
+		String uuid = UUID.randomUUID().toString();
+		for (MultipartFile file : uploadfiles) {
+			if (file.isEmpty()) {
+				continue;
+			}
+			String fullPath = BASE_PATH + uuid + "/" + file.getOriginalFilename();
+			File tmp = new File(BASE_PATH + uuid);
+			if (!tmp.exists())
+				tmp.mkdirs();
+
+			FileInfo fileInfo = FileInfo.builder().fullLocation(fullPath).description("Brak").length(file.getSize())
+					.name(file.getOriginalFilename()).build();
+			Path path = Paths.get(fullPath);
+			Files.write(path, file.getBytes());
+
+			fileInfo = fileInfoService.save(fileInfo, directoryId);
+			permissionService.createForFile(fileInfo);
+		}
+		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+	
+	
+	
+	
+ -->
+</body>
+</html>
