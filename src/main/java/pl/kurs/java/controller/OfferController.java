@@ -38,7 +38,7 @@ import pl.kurs.java.service.EmailService;
 import pl.kurs.java.service.ImageProcessorService;
 
 @Controller
-@RequestMapping("/offer")
+@RequestMapping("")
 @RequiredArgsConstructor
 //@Profile("dev")
 public class OfferController {
@@ -50,7 +50,7 @@ public class OfferController {
 	private final ModelMapper mapper;
 	
 
-	@GetMapping("/")
+	@GetMapping("")
 	public String enterPage(ModelMap model,
 			@RequestParam(name = "query", required = false, defaultValue = "") String query) {
 		model.addAttribute("offers", offerRepository.findAllWithQuery("%" + query + "%").stream()
@@ -64,7 +64,7 @@ public class OfferController {
 		return "offerDetailView";
 	}
 
-	@PostMapping("/")
+	@PostMapping("")
 	public String offer(ModelMap model, @ModelAttribute OfferForm form, @RequestParam("photos") MultipartFile file)
 			throws IOException {
 		UUID uuid = UUID.randomUUID();
