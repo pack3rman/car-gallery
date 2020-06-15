@@ -69,14 +69,16 @@ public class OfferController {
 			throws IOException {
 		UUID uuid = UUID.randomUUID();
 
-		File targetFile = new File("c:/zdjecia/" + uuid + file.getOriginalFilename());
+		//File targetFile = new File("c:/zdjecia/" + uuid + file.getOriginalFilename());
 
-		FileUtils.copyInputStreamToFile(file.getInputStream(), targetFile);
+		//FileUtils.copyInputStreamToFile(file.getInputStream(), targetFile);
 
-		imageProcessorService.processImage(targetFile.getAbsolutePath());
+		//imageProcessorService.processImage(targetFile.getAbsolutePath());
 
 		OfferFoto of = OfferFoto.builder()//
-				.path(targetFile.getAbsolutePath())//
+				.name(file.getName()+uuid)//
+				.pic(file.getBytes())
+				.type(file.getContentType())
 				.build();
 
 		Offer offer1 = mapper.map(form, Offer.class);
@@ -108,7 +110,8 @@ public class OfferController {
 			imageProcessorService.processImage(targetFile.getAbsolutePath());
 			
 			OfferFoto of = OfferFoto.builder()//
-					.path(targetFile.getAbsolutePath())//
+					.path(file.getName())//
+					.pic(file.getBytes())
 					.build();
 			
 			System.out.println(file.getOriginalFilename());
@@ -127,7 +130,7 @@ public class OfferController {
 		Optional<Offer> usuwany = offerRepository.findById(id);
 		System.out.println(usuwany);
 		System.out.println("returning to list of cars");
-		return "redirect:/offer/";
+		return "redirect:";
 	}
 
 	@InitBinder
