@@ -74,7 +74,7 @@ function changeFileStatus() {
 		class="align-self-start mr-3" style="width: 435px" />
 
 	<div class="media-body bg-light">
-    <h4 th:href="'/offer/details/'+${offer.id}" th:text="${offer.mark}+ ' '+${offer.model}+' | Price: '+${offer.price}+' PLN'">&nbsp;></h4>
+    <h4 th:href="'/details/'+${offer.id}" th:text="${offer.mark}+ ' '+${offer.model}+' | Price: '+${offer.price}+' PLN'">&nbsp;></h4>
 		<p th:text="'Production Date: '+${offer.productionDate}">&nbsp;></p>
 		<p th:text="'Mileage: '+${offer.mileage}+' KM'">&nbsp;></p>
 		<p th:text="'invoice: '+${offer.invoice}+' | Accident: '+${offer.accident}">&nbsp;></p>
@@ -89,7 +89,7 @@ function changeFileStatus() {
 		</div>
 		
 	</div>
-	<form method="POST" action="/offer/add" enctype="multipart/form-data" id="fileUploadForm" class="uploadForm">
+	<form method="POST" action="/add" enctype="multipart/form-data" id="fileUploadForm" class="uploadForm">
 		
 		<input type="hidden" name="id" th:value="${offer.id}"/>
 					<input id="inputFiles" class="uploadFormInputFile" type="file" name="files" onchange="changeFileStatus();" multiple>

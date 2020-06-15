@@ -19,6 +19,8 @@ public class OfferFoto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	private String path;
+	private String name;
+	private byte[] pic;
+	private String type;
 
 }
