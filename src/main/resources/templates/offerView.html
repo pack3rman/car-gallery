@@ -18,14 +18,14 @@
 		}
 	}
 	function deleteOffer(id) {
-		document.location.href = '/offer/delete?id=' + id;
+		document.location.href = '/delete?id=' + id;
 	}
 </script>
 </head>
 
 <nav
 	class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-center">
-	<form class="form-inline" action="/offer/">
+	<form class="form-inline" action="/">
 		<input class="form-control" type="text" placeholder="Search"
 			name="query">
 		<button class="btn btn-success" type="submit">Search</button>
@@ -45,7 +45,7 @@
 	<div class="media-body bg-light">
 		<ul class="nav">
 			<li class="nav-item"><a class="nav-link"
-				th:href="'/offer/details/'+${o.id}"
+				th:href="'/details/'+${o.id}"
 				th:text="${o.mark}+ ' '+${o.model}+' | Price: '+${o.price}+' PLN'">&nbsp;></a>
 			</li>
 		</ul>
@@ -65,7 +65,7 @@
 	<input class="btn btn-success btn-block " data-target="#myModal"
 		data-toggle="modal" type="button" value="New offer" />
 </div>
-<form action="/offer/" class="form-horizontal" method="post"
+<form action="" class="form-horizontal" method="post"
 	enctype="multipart/form-data">
 	<div class="modal fade" id="myModal" role="dialog">
 		<div class="modal-dialog">
@@ -232,7 +232,7 @@
 		</div>
 	</div>
 </form>
-<form action="/offer/" class="form-horizontal" method="post">
+<form action="" class="form-horizontal" method="post">
 	<div class="modal fade" id="myModalLogIn" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
